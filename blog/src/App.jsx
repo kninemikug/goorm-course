@@ -5,8 +5,11 @@ import PostList from './components/PostList'
 import PostDetail from './components/PostDetail'
 
 function App() {
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
+  console.log("Current Basename:", basename);
+
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router basename={basename}>
       <div className="App">
         <Header />
         <main>

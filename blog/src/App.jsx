@@ -6,7 +6,7 @@ import PostDetail from './components/PostDetail'
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <div className="App">
         <Header />
         <main>

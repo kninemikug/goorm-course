@@ -4,26 +4,31 @@ import { motion } from 'framer-motion';
 import { Calendar, ChevronRight } from 'lucide-react';
 
 const PostList = () => {
-    const [posts, setPosts] = useState([
-        {
-            id: 'first-post',
-            title: 'GitHub Pages로 블로그 시작하기',
-            date: '2026-01-18',
-            summary: 'Vite와 React를 사용하여 나만의 프리미엄 블로그를 구축하는 방법을 알아봅니다.',
-            category: 'Development'
-        },
-        {
-            id: 'react-study',
-            title: 'React와 Framer Motion으로 애니메이션 구현하기',
-            date: '2026-01-17',
-            summary: '웹사이트에 생동감을 불어넣는 세련된 애니메이션 기법들을 소개합니다.',
-            category: 'Frontend'
-        }
-    ]);
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.BASE_URL}posts.json`);
+                if (!response.ok) throw new Error('Failed to fetch posts');
+                const data = await response.json();
+                setPosts(data);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPosts();
+    }, []);
+
+    if (loading) return <div className="container" style={{ marginTop: '4rem' }}>Loading insights...</div>;
 
     return (
         <div className="container fade-in" style={{ marginTop: '4rem' }}>
-            <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>
+            <h1 style={{ fontSize: '3rem', marginBottom: '2rem', lineHeight: 1.2 }}>
                 Latest <span className="gradient-text">Insights</span>
             </h1>
 
@@ -52,7 +57,7 @@ const PostList = () => {
                                     }}>
                                         {post.category}
                                     </span>
-                                    <h2 style={{ fontSize: '1.5rem', margin: '0.5rem 0' }}>{post.title}</h2>
+                                    <h2 style={{ fontSize: '1.5rem', margin: '0.5rem 0', lineHeight: 1.2 }}>{post.title}</h2>
                                     <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>{post.summary}</p>
 
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>

@@ -1,0 +1,23 @@
+[
+    {
+        "id": "260119",
+        "title": "[논문 리뷰] A Survey of Prompt Engineering Methods in Large Language Models (2024)",
+        "date": "2026-01-19",
+        "summary": "프롬프트 엔지니어링의 정수를 담은 논문 리뷰. 29가지 NLP 태스크별 SoTA 기법을 심도 있게 다룹니다.",
+        "category": "AI & Research"
+    },
+    {
+        "id": "first-post",
+        "title": "GitHub Pages로 블로그 시작하기",
+        "date": "2026-01-18",
+        "summary": "Vite와 React를 사용하여 나만의 프리미엄 블로그를 구축하는 방법을 알아봅니다.",
+        "category": "Development"
+    },
+    {
+        "id": "react-study",
+        "title": "React와 Framer Motion으로 애니메이션 구현하기",
+        "date": "2026-01-17",
+        "summary": "웹사이트에 생동감을 불어넣는 세련된 애니메이션 기법들을 소개합니다.",
+        "category": "Frontend"
+    }
+]

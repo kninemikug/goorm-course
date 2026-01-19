@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -9,28 +11,40 @@ const PostDetail = () => {
     const [post, setPost] = useState(null);
 
     useEffect(() => {
-        // 실제 환경에서는 fetch(`/posts/${id}.md`) 를 통해 가져오게 됩니다.
-        // 여기서는 데모를 위해 고정된 내용을 사용합니다.
-        const mockPost = {
-            title: 'GitHub Pages로 블로그 시작하기',
-            date: '2026-01-18',
-            content: `
-# GitHub Pages로 블로그 시작하기
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.BASE_URL}posts/${id}.md`);
+                if (!response.ok) throw new Error('Post not found');
+                const text = await response.text();
 
-GitHub Pages는 정적 웹사이트를 호스팅하기에 최적의 장소입니다. 
-여기에 **React**와 **Vite**를 더하면 더욱 강력한 블로그를 만들 수 있습니다.
+                // 제목은 첫 번째 # 이후의 텍스트를 사용
+                const titleMatch = text.match(/^#\s+(.*)/m);
+                const title = titleMatch ? titleMatch[1] : 'Untitled Post';
 
-## 왜 Vite인가요?
-- 번들링 속도가 압도적으로 빠릅니다.
-- HMR(Hot Module Replacement)이 매우 안정적입니다.
-- 설정이 간결합니다.
+                // 첫 번째 제목 줄 제거하여 본문에서 중복되지 않게 함
+                const content = text.replace(/^#\s+.*$/m, '').trim();
 
-## 앞으로의 계획
-학습한 기술들을 이 블로그에 꾸준히 기록해 나갈 예정입니다.
-      `,
-            category: 'Development'
+                setPost({
+                    title: title,
+                    date: '2026-01-19', // 실제로는 파일 메타데이터나 frontmatter에서 가져와야 함
+                    content: content,
+                    category: 'AI & Research'
+                });
+            } catch (error) {
+                console.error('Error fetching post:', error);
+                // 기존 하드코딩된 데이터 유지 (하위 호환성)
+                if (id === 'first-post') {
+                    setPost({
+                        title: 'GitHub Pages로 블로그 시작하기',
+                        date: '2026-01-18',
+                        content: 'GitHub Pages는 정적 웹사이트를 호스팅하기에 최적의 장소입니다.',
+                        category: 'Development'
+                    });
+                }
+            }
         };
-        setPost(mockPost);
+
+        fetchPost();
     }, [id]);
 
     if (!post) return null;
@@ -49,7 +63,7 @@ GitHub Pages는 정적 웹사이트를 호스팅하기에 최적의 장소입니
 
             <header style={{ marginBottom: '4rem' }}>
                 <span style={{ color: 'var(--primary)', fontWeight: 600 }}>{post.category}</span>
-                <h1 style={{ fontSize: '3.5rem', margin: '1rem 0' }}>{post.title}</h1>
+                <h1 style={{ fontSize: '3.5rem', margin: '1rem 0', lineHeight: 1.2 }}>{post.title}</h1>
                 <div style={{ display: 'flex', gap: '2rem', color: 'var(--text-muted)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Calendar size={16} />
@@ -64,7 +78,12 @@ GitHub Pages는 정적 웹사이트를 호스팅하기에 최적의 장소입니
 
             <div className="glass" style={{ padding: '3rem' }}>
                 <article className="markdown-body">
-                    <ReactMarkdown>{post.content}</ReactMarkdown>
+                    <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw]}
+                    >
+                        {post.content}
+                    </ReactMarkdown>
                 </article>
             </div>
         </motion.div>

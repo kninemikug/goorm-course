@@ -18,9 +18,10 @@ const Header = () => {
         <PenTool size={24} className="gradient-text" />
         <span className="gradient-text" style={{ fontSize: '1.5rem' }}>MyDevLog</span>
       </Link>
-      
+
       <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
         <Link to="/" style={{ fontWeight: 500, color: 'var(--text-muted)' }}>Posts</Link>
+        <Link to="/contact" style={{ fontWeight: 500, color: 'var(--text-muted)' }}>Contact</Link>
         <a href="https://github.com" target="_blank" rel="noopener noreferrer">
           <Github size={20} />
         </a>

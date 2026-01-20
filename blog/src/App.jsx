@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import PostList from './components/PostList'
 import PostDetail from './components/PostDetail'
+import Contact from './components/Contact'
 
 function App() {
   const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<PostList />} />
             <Route path="/post/:id" element={<PostDetail />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
 

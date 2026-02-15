@@ -1,176 +1,94 @@
-:root {
-  --primary: #6366f1;
-  --secondary: #a855f7;
-  --background: #0f172a;
-  --surface: rgba(255, 255, 255, 0.05);
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
-  --border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(15, 23, 42, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+/* Font Imports */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Colors - Zinc Palette */
+  --color-background: #09090b;
+  --color-surface: #18181b;
+  --color-border-subtle: #27272a;
+  --color-text-primary: #ededed;
+  --color-text-secondary: #a1a1aa;
+  
+  /* Glow Effects */
+  --color-primary-glow: #bb9af7;
+  --color-secondary-glow: #7dcfff;
+
+  /* Typography */
+  --font-sans: Pretendard, Inter, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', D2Coding, monospace;
+  --font-serif: Newsreader, 'Ridi Batang', serif;
+  
+  /* Gradient */
+  --image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--background);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-/* Glassmorphism Effect */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: 1rem;
-}
-
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 800;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@layer base {
+  body {
+    @apply bg-background text-text-primary h-full antialiased font-sans selection:bg-primary-glow/30;
+  }
+  
+  html {
+    @apply h-full;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  /* Custom Scrollbar for Chrome/Safari/Webkit */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-surface;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-subtle rounded;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-text-secondary/50;
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
+@layer components {
+  .markdown-body {
+    @apply text-text-primary text-lg leading-loose max-w-[65ch] mx-auto break-keep;
+  }
 
-/* Markdown Table Styles */
-.markdown-body table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  border: 1px solid var(--border);
-  font-size: 0.95rem;
-}
+  .markdown-body h1, 
+  .markdown-body h2 {
+    @apply font-serif font-semibold mt-12 mb-6 text-text-primary;
+  }
+  
+  .markdown-body h1 { @apply text-4xl; }
+  .markdown-body h2 { @apply text-3xl border-b border-border-subtle pb-2; }
+  .markdown-body h3 { @apply text-2xl font-sans font-medium mt-8 mb-4 text-text-primary; }
 
-.markdown-body th,
-.markdown-body td {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  text-align: left;
-}
+  .markdown-body p {
+    @apply mb-6;
+  }
 
-.markdown-body th {
-  background: rgba(255, 255, 255, 0.1);
-  font-weight: 700;
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 0.05rem;
-}
+  .markdown-body a {
+    @apply text-primary-glow hover:text-secondary-glow underline decoration-1 underline-offset-4 transition-colors;
+  }
 
-.markdown-body tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.02);
-}
+  .markdown-body blockquote {
+    @apply pl-6 py-1 my-8 border-l-4 border-l-primary-glow bg-gradient-to-r from-primary-glow/5 to-transparent rounded-r-lg italic text-text-secondary;
+    box-shadow: -4px 0 12px -2px var(--color-primary-glow);
+  }
 
-.markdown-body tr:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
+  .markdown-body ul { @apply list-disc list-outside ml-6 mb-6 space-y-2; }
+  .markdown-body ol { @apply list-decimal list-outside ml-6 mb-6 space-y-2; }
 
-/* Markdown Typography */
-.markdown-body p {
-  margin-bottom: 1.2rem;
-}
+  /* Inline Code */
+  .markdown-body :not(pre) > code {
+    @apply bg-surface border border-border-subtle rounded px-1.5 py-0.5 text-sm font-mono text-secondary-glow;
+  }
 
-.markdown-body strong {
-  font-weight: 700;
-  color: var(--text);
-}
-
-.markdown-body em {
-  font-style: italic;
-  color: var(--text-muted);
-}
-
-.markdown-body ul,
-.markdown-body ol {
-  margin-bottom: 1.2rem;
-  padding-left: 1.5rem;
-}
-
-.markdown-body li {
-  margin-bottom: 0.5rem;
-}
-
-.markdown-body code {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-family: monospace;
-  font-size: 0.9em;
-}
-
-/* Callout Box */
-.callout {
-  background: rgba(99, 102, 241, 0.05);
-  border-left: 4px solid var(--primary);
-  padding: 1.5rem 2rem;
-  margin: 1.5rem 0;
-  border-radius: 0 1rem 1rem 0;
-}
-
-.callout-title {
-  display: block;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-}
-
-.markdown-body hr {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 3rem 0;
+  /* Code Block Wrapper (Pre) - will be overridden by custom component but good fallback */
+  .markdown-body pre {
+    @apply bg-[#1a1b26] rounded-xl p-4 overflow-x-auto mb-8 border border-border-subtle shadow-2xl;
+  }
 }

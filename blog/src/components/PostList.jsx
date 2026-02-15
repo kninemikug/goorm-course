@@ -27,46 +27,58 @@ const PostList = () => {
     if (loading) return <div className="container" style={{ marginTop: '4rem' }}>Loading insights...</div>;
 
     return (
-        <div className="container fade-in" style={{ marginTop: '4rem' }}>
-            <h1 style={{ fontSize: '3rem', marginBottom: '2rem', lineHeight: 1.2 }}>
-                Latest <span className="gradient-text">Insights</span>
-            </h1>
+        <div className="container max-w-5xl mx-auto px-6 pt-16 pb-20">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-12"
+            >
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    Latest <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-glow to-secondary-glow">Insights</span>
+                </h1>
+                <p className="text-text-secondary text-lg max-w-2xl">
+                    Thoughts on software engineering, design systems, and the future of tech.
+                </p>
+            </motion.div>
 
-            <div style={{ display: 'grid', gap: '2rem' }}>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post, index) => (
                     <motion.div
                         key={post.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                     >
-                        <Link to={`/post/${post.id}`} className="glass" style={{
-                            display: 'block',
-                            padding: '2rem',
-                            transition: 'transform 0.2s',
-                            cursor: 'pointer'
-                        }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                <div>
-                                    <span style={{
-                                        fontSize: '0.8rem',
-                                        color: 'var(--primary)',
-                                        fontWeight: 600,
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.1rem'
-                                    }}>
-                                        {post.category}
-                                    </span>
-                                    <h2 style={{ fontSize: '1.5rem', margin: '0.5rem 0', lineHeight: 1.2 }}>{post.title}</h2>
-                                    <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>{post.summary}</p>
+                        <Link to={`/post/${post.id}`} className="group block h-full">
+                            <article className="h-full p-6 rounded-2xl bg-surface border border-border-subtle hover:border-primary-glow/30 transition-all duration-300 hover:shadow-2xl hover:shadow-primary-glow/10 hover:-translate-y-1 relative overflow-hidden">
+                                {/* Gradient Blob on Hover */}
+                                <div className="absolute top-0 right-0 p-20 bg-primary-glow/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                                        <Calendar size={14} />
-                                        <span>{post.date}</span>
+                                <div className="relative z-10 flex flex-col h-full">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-white/5 text-primary-glow border border-white/5">
+                                            {post.category}
+                                        </span>
+                                        <div className="flex items-center gap-1.5 text-text-secondary text-xs">
+                                            <Calendar size={12} />
+                                            <span>{post.date}</span>
+                                        </div>
+                                    </div>
+
+                                    <h2 className="text-xl font-bold mb-3 group-hover:text-primary-glow transition-colors line-clamp-2">
+                                        {post.title}
+                                    </h2>
+
+                                    <p className="text-text-secondary text-sm leading-relaxed mb-6 line-clamp-3">
+                                        {post.summary || post.content.substring(0, 100) + "..."}
+                                    </p>
+
+                                    <div className="mt-auto flex items-center text-sm font-medium text-text-secondary group-hover:text-text-primary transition-colors">
+                                        Read article
+                                        <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </div>
-                                <ChevronRight className="text-muted" size={20} />
-                            </div>
+                            </article>
                         </Link>
                     </motion.div>
                 ))}

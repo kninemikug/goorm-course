@@ -4,6 +4,7 @@ import Header from './components/Header'
 import PostList from './components/PostList'
 import PostDetail from './components/PostDetail'
 import Contact from './components/Contact'
+import DesignSystemTest from './components/DesignSystemTest'
 
 function App() {
   const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -18,30 +19,13 @@ function App() {
             <Route path="/" element={<PostList />} />
             <Route path="/post/:id" element={<PostDetail />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/design-system" element={<DesignSystemTest />} />
           </Routes>
         </main>
 
         {/* Background decorative elements */}
-        <div style={{
-          position: 'fixed',
-          top: '-10%',
-          right: '-10%',
-          width: '40vw',
-          height: '40vw',
-          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
-          zIndex: -1,
-          pointerEvents: 'none'
-        }} />
-        <div style={{
-          position: 'fixed',
-          bottom: '-10%',
-          left: '-10%',
-          width: '40vw',
-          height: '40vw',
-          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
-          zIndex: -1,
-          pointerEvents: 'none'
-        }} />
+        <div className="fixed -top-[10%] -right-[10%] w-[40vw] h-[40vw] rounded-full bg-secondary-glow/15 blur-3xl -z-10 pointer-events-none" />
+        <div className="fixed -bottom-[10%] -left-[10%] w-[40vw] h-[40vw] rounded-full bg-primary-glow/15 blur-3xl -z-10 pointer-events-none" />
       </div>
     </Router>
   )

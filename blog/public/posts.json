@@ -1,5 +1,12 @@
 [
     {
+        "id": "260126",
+        "title": "[Pandas] 데이터프레임 완전 정복: 사칙연산부터 Groupby 심화까지",
+        "date": "2026-01-26",
+        "summary": "Pandas DataFrame의 핵심인 객체 간 연산, 이동 계산(Rolling), 그리고 강력한 그룹화(Groupby) 기능을 정리합니다.",
+        "category": "Data Science"
+    },
+    {
         "id": "260119",
         "title": "[논문 리뷰] A Survey of Prompt Engineering Methods in Large Language Models (2024)",
         "date": "2026-01-19",

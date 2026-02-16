@@ -1,4 +1,12 @@
 import CodeBlock from './CodeBlock';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 const PostDetail = () => {
     // ... existing state and hooks
@@ -6,6 +14,37 @@ const PostDetail = () => {
     const [post, setPost] = useState(null);
 
     // ... useEffect
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                // posts.json에서 메타데이터 찾기 (선택적)
+                const metaResponse = await fetch(`${import.meta.env.BASE_URL}posts.json`);
+                const metaData = await metaResponse.json();
+                const postMeta = metaData.find(p => p.id === id);
+
+                // Markdown 파일 가져오기
+                const response = await fetch(`${import.meta.env.BASE_URL}posts/${id}.md`);
+                if (!response.ok) throw new Error('Post not found');
+                const text = await response.text();
+
+                // 간단한 파싱: 첫 줄 # 제목 제거
+                const titleMatch = text.match(/^#\s+(.*)/m);
+                const title = titleMatch ? titleMatch[1] : (postMeta?.title || 'Untitled Post');
+                const content = text.replace(/^#\s+.*$/m, '').trim();
+
+                setPost({
+                    title: title,
+                    date: postMeta?.date || '2026-01-01',
+                    category: postMeta?.category || 'General',
+                    content: content
+                });
+            } catch (error) {
+                console.error('Error fetching post:', error);
+            }
+        };
+
+        fetchPost();
+    }, [id]);
 
     if (!post) return null;
 

@@ -34,10 +34,10 @@ const PostList = () => {
                 className="mb-12"
             >
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                    Latest <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-glow to-secondary-glow">Insights</span>
+                    개발 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-glow to-secondary-glow">기록</span> 공간
                 </h1>
                 <p className="text-text-secondary text-lg max-w-2xl">
-                    Thoughts on software engineering, design systems, and the future of tech.
+                    개발자로 성장하는 과정을 기록합니다.
                 </p>
             </motion.div>
 

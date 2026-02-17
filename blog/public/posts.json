@@ -1,5 +1,12 @@
 [
     {
+        "id": "260128",
+        "title": "[Pandas] 헷갈리는 데이터 정렬과 병합 완벽 정리 (sort, nlargest, merge)",
+        "date": "2026-01-28",
+        "summary": "캐글(Kaggle) API를 통해 LinkedIn 데이터셋을 가져와 분석하기 좋은 형태로 가공하는 과정을 정리합니다. sort_values, nlargest, merge 등의 유용한 팁을 다룹니다.",
+        "category": "Data Science"
+    },
+    {
         "id": "260126",
         "title": "[Pandas] 데이터프레임 완전 정복: 사칙연산부터 Groupby 심화까지",
         "date": "2026-01-26",
